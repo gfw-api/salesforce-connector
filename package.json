@@ -2,8 +2,41 @@
   "name": "salesforce-connector",
   "version": "1.0.0",
   "description": "RW API service that connects to SalesForce.",
+  "repository": "https://github.com/gfw-api/salesforce-connector",
   "main": "index.js",
   "license": "MIT",
+  "keywords": [
+    "salesforce",
+    "koa2",
+    "rw",
+    "nodejs",
+    "typescript"
+  ],
+  "author": {
+    "name": "Vizzuality",
+    "email": "hello@vizzuality.com",
+    "url": "https://vizzuality.com/"
+  },
+  "engines": {
+    "node": "~12"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "tslint --fix"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "scripts": {
+    "coverage": "nyc ts-mocha -b --project tsconfig.json -r tsconfig-paths/register --timeout 20000 'test/**/*.ts' --exit",
+    "test": "ts-mocha -b --project tsconfig.json -r tsconfig-paths/register --timeout 20000 'test/**/*.ts' --exit",
+    "start": "ts-node --files --project tsconfig.json -r tsconfig-paths/register src/index.ts",
+    "watch": "ts-node-dev --respawn --transpile-only --files --project tsconfig.json -r tsconfig-paths/register src/index.ts",
+    "lint": "tslint --project tsconfig.json && tsc"
+  },
   "dependencies": {
     "bunyan": "^1.8.15",
     "config": "^3.3.6",
@@ -14,20 +47,22 @@
     "koa-simple-healthcheck": "^0.0.1",
     "rw-api-microservice-node": "^3.3.3"
   },
-  "scripts": {
-    "coverage": "nyc ts-mocha -b --project tsconfig.json -r tsconfig-paths/register --timeout 20000 'test/**/*.ts' --exit",
-    "test": "ts-mocha -b --project tsconfig.json -r tsconfig-paths/register --timeout 20000 'test/**/*.ts' --exit",
-    "start": "ts-node --files --project tsconfig.json -r tsconfig-paths/register src/index.ts",
-    "watch": "ts-node-dev --respawn --transpile-only --files --project tsconfig.json -r tsconfig-paths/register src/index.ts",
-    "lint": "tslint --project tsconfig.json && tsc"
-  },
   "devDependencies": {
     "@types/bunyan": "^1.8.6",
+    "@types/chai": "^4.2.18",
+    "@types/chai-http": "^4.2.0",
     "@types/config": "^0.0.38",
     "@types/koa": "^2.13.1",
     "@types/koa-logger": "^3.1.1",
     "@types/koa-router": "^7.4.2",
+    "@types/mocha": "^8.2.2",
     "@types/node": "^15.0.2",
+    "@types/superagent": "^4.1.11",
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
+    "mocha": "^8.4.0",
+    "nock": "^13.0.11",
+    "superagent": "^6.1.0",
     "ts-mocha": "^8.0.0",
     "ts-node": "^9.1.1",
     "ts-node-dev": "^1.1.6",
