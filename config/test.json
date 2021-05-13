@@ -1,1 +1,7 @@
-{}
+{
+  "salesforce": {
+    "url": "https://fake.salesforce.com",
+    "username": "fakeUser",
+    "password": "fakePass"
+  }
+}

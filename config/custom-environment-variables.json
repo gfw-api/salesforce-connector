@@ -1,4 +1,8 @@
 {
+  "server": {
+    "internalUrl": "INTERNAL_URL",
+    "publicUrl": "PUBLIC_URL"
+  },
   "logger": {
     "type": "LOGGER_TYPE",
     "level": "LOGGER_LEVEL"

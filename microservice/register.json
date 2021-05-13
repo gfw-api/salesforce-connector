@@ -1,0 +1,14 @@
+{
+  "name": "#(service.name)",
+  "tags": ["salesforce"],
+  "endpoints": [
+    {
+      "path": "/salesforce/contact/:email",
+      "method": "GET",
+      "redirect": {
+        "method": "GET",
+        "path": "/salesforce/contact/:email"
+      }
+    }
+  ]
+}

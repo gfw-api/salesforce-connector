@@ -1,4 +1,8 @@
 {
+  "server": {
+    "publicUrl": "http://salesforce.dev:9500",
+    "internalUrl": "http://localhost:9500"
+  },
   "logger": {
     "name": "Salesforce",
     "level": "debug",
