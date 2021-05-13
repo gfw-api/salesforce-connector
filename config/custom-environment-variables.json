@@ -1,0 +1,11 @@
+{
+  "logger": {
+    "type": "LOGGER_TYPE",
+    "level": "LOGGER_LEVEL"
+  },
+  "salesforce": {
+    "url": "SALESFORCE_URL",
+    "username": "SALESFORCE_USERNAME",
+    "password": "SALESFORCE_PASSWORD"
+  }
+}

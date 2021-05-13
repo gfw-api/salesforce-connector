@@ -1,0 +1,8 @@
+{
+  "logger": {
+    "name": "Salesforce",
+    "level": "debug",
+    "type": "console",
+    "toFile": false
+  }
+}
