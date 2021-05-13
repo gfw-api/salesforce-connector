@@ -5,11 +5,14 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@types/bunyan": "^1.8.6",
-    "@types/config": "^0.0.38",
     "bunyan": "^1.8.15",
     "config": "^3.3.6",
-    "jsforce": "^2.0.0-beta.3"
+    "jsforce": "^2.0.0-beta.3",
+    "koa": "^2.13.1",
+    "koa-logger": "^3.2.1",
+    "koa-router": "^10.0.0",
+    "koa-simple-healthcheck": "^0.0.1",
+    "rw-api-microservice-node": "^3.3.3"
   },
   "scripts": {
     "coverage": "nyc ts-mocha -b --project tsconfig.json -r tsconfig-paths/register --timeout 20000 'test/**/*.ts' --exit",
@@ -19,6 +22,11 @@
     "lint": "tslint --project tsconfig.json && tsc"
   },
   "devDependencies": {
+    "@types/bunyan": "^1.8.6",
+    "@types/config": "^0.0.38",
+    "@types/koa": "^2.13.1",
+    "@types/koa-logger": "^3.1.1",
+    "@types/koa-router": "^7.4.2",
     "@types/node": "^15.0.2",
     "ts-mocha": "^8.0.0",
     "ts-node": "^9.1.1",
