@@ -1,0 +1,13 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: salesforce-connector
+  namespace: gfw
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1beta1
+    kind: Deployment
+    name: salesforce-connector
+  minReplicas: 2
+  maxReplicas: 6
+  targetCPUUtilizationPercentage: 50
