@@ -8,7 +8,7 @@ import { connect } from './salesforce-connection.service';
 export default class SalesforceService {
     static async findContactByEmailOrLastName(search: string): Promise<SFContact> {
         const connection: Connection = await connect();
-        const results = await connection.sobject("Contact").find({
+        const results: SFContact[] = await connection.sobject('Contact').find({
             $or: [
                 { LastName: { $like: search } },
                 { Email: { $like: search } },
@@ -22,6 +22,6 @@ export default class SalesforceService {
             throw new ContactNotFoundError();
         }
 
-        return results[0] as unknown as SFContact;
+        return results[0];
     }
 }

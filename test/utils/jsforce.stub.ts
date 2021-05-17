@@ -2,8 +2,7 @@ import { SinonSandbox, SinonStub } from 'sinon';
 import { Connection } from 'jsforce';
 
 import { SFContact } from 'services/salesforce.interfaces';
-
-import * as mod from "services/salesforce-connection.service";
+import * as mod from 'services/salesforce-connection.service';
 
 export interface JSForceStubResponse {
     findStub: SinonStub;
@@ -12,9 +11,9 @@ export interface JSForceStubResponse {
 }
 
 export function stubJSForce(sandbox: SinonSandbox, findReturns: SFContact[] = null): JSForceStubResponse {
-    const findStub = sandbox.stub().resolves(findReturns);
-    const loginStub = sandbox.stub().resolves(null);
-    const sobjectStub = sandbox.stub().returns({ find: findStub });
+    const findStub: SinonStub = sandbox.stub().resolves(findReturns);
+    const loginStub: SinonStub = sandbox.stub().resolves(null);
+    const sobjectStub: SinonStub = sandbox.stub().returns({ find: findStub });
 
     sandbox.stub(mod, 'connect').resolves({
         login: loginStub,

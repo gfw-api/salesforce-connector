@@ -5,8 +5,8 @@ import request from 'superagent';
 
 import {SFContact} from 'services/salesforce.interfaces';
 import {closeTestAgent, getTestAgent} from './utils/test.server';
-import {stubJSForce} from "./utils/jsforce.stub";
-import SFContactFactory from "./utils/sfcontact.factory";
+import {stubJSForce} from './utils/jsforce.stub';
+import SFContactFactory from './utils/sfcontact.factory';
 
 let requester: ChaiHttp.Agent;
 let sandbox: SinonSandbox;
@@ -40,12 +40,12 @@ describe('Find Salesforce contacts by email', () => {
 
         sandbox.assert.calledOnce(findStub);
         sandbox.assert.calledWith(findStub, {
-            "$or": [
-                { "LastName": { "$like": email } },
-                { "Email": { "$like": email } },
-                { "Personal_Email__c": { "$like": email } },
-                { "Work_Email__c": { "$like": email } },
-                { "Alternate_Email__c": { "$like": email } }
+            '$or': [
+                { 'LastName': { '$like': email } },
+                { 'Email': { '$like': email } },
+                { 'Personal_Email__c': { '$like': email } },
+                { 'Work_Email__c': { '$like': email } },
+                { 'Alternate_Email__c': { '$like': email } }
             ]
         });
     });
@@ -72,12 +72,12 @@ describe('Find Salesforce contacts by email', () => {
 
         sandbox.assert.calledOnce(findStub);
         sandbox.assert.calledWith(findStub, {
-            "$or": [
-                { "LastName": { "$like": email } },
-                { "Email": { "$like": email } },
-                { "Personal_Email__c": { "$like": email } },
-                { "Work_Email__c": { "$like": email } },
-                { "Alternate_Email__c": { "$like": email } }
+            '$or': [
+                { 'LastName': { '$like': email } },
+                { 'Email': { '$like': email } },
+                { 'Personal_Email__c': { '$like': email } },
+                { 'Work_Email__c': { '$like': email } },
+                { 'Alternate_Email__c': { '$like': email } }
             ]
         });
     });

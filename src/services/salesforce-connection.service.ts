@@ -4,7 +4,7 @@ import logger from 'logger';
 
 let currentConnection: Connection;
 
-async function createConnection() {
+async function createConnection(): Promise<void> {
     logger.info('[SalesforceService] Initializing SF service...');
 
     const url: string = config.get('salesforce.url');
@@ -20,7 +20,7 @@ async function createConnection() {
     logger.info('[SalesforceService] Connection to SF successful');
 }
 
-export async function connect() {
+export async function connect(): Promise<Connection> {
     if(!currentConnection) {
         await createConnection();
     }
