@@ -26,6 +26,7 @@ COPY ./microservice opt/$NAME/microservice
 WORKDIR /opt/$NAME
 
 RUN chown -R $USER:$USER /opt/$NAME
+RUN chmod a+x /opt/$NAME/entrypoint.sh
 
 # Tell Docker we are going to use this ports
 EXPOSE 9000
