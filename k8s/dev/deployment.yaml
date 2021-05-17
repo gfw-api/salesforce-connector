@@ -60,7 +60,7 @@ spec:
                   key: CT_TOKEN
                   name: mssecrets
             - name: LOCAL_URL
-              value: 'http://salesforce-connector.gfw.svc.cluster.local'
+              value: 'http://salesforce-connector.gfw.svc.cluster.local:9000'
             - name: CT_URL
               valueFrom:
                 secretKeyRef:
