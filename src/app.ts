@@ -45,7 +45,7 @@ const init: () => Promise<IInit> = async (): Promise<IInit> => {
         });
 
         app.use(RWAPIMicroservice.bootstrap({
-            name: 'authorization',
+            name: 'salesforce-connector',
             info: require('../microservice/register.json'),
             swagger: {},
             logger,
