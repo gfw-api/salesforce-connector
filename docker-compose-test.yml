@@ -1,0 +1,25 @@
+version: "3"
+services:
+  test:
+    build: .
+    ports:
+      - "9000:9000"
+    container_name: salesforce-connector-test
+    environment:
+      NODE_ENV: test
+      SESSION_KEY: test
+      PORT: 9000
+      NODE_PATH: app/src
+      PUBLIC_URL: http://127.0.0.1:9000
+      CT_URL: http://mymachine:8000
+      CT_TOKEN: cttoken
+      CT_REGISTER_MODE: autoa
+      LOCAL_URL: http://127.0.0.1:9000
+      HOST_IP: 127.0.0.1
+      FASTLY_ENABLED: "false"
+      SALESFORCE_URL: "fakeUrl"
+      SALESFORCE_USERNAME: "fakeUser"
+      SALESFORCE_PASSWORD: "fakePass"
+    command: test
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

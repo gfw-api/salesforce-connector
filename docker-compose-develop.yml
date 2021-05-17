@@ -1,0 +1,12 @@
+version: "3"
+services:
+  develop:
+    build: .
+    ports:
+      - "9000:9000"
+    container_name: salesforce-connector
+    env_file:
+      - dev.env
+    command: develop
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
