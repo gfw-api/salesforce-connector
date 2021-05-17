@@ -9,11 +9,11 @@ import ContactNotFoundError from 'errors/contact-not-found.error';
 
 const router: Router = new Router<DefaultState, Context>({ prefix: '/salesforce' });
 
-router.get('/contact/:email', async (ctx: Context): Promise<void> => {
-    logger.info('[SalesforceConnector] - Find SF contact by email: ', ctx.params.email);
+router.get('/contact/:search', async (ctx: Context): Promise<void> => {
+    logger.info('[SalesforceConnector] - Find SF contact by email or last name: ', ctx.params.search);
 
     try {
-        const contact: SFContact = await SalesforceService.findContactByEmail(ctx.params.email);
+        const contact: SFContact = await SalesforceService.findContactByEmailOrLastName(ctx.params.search);
         ctx.body = { data: SalesForceSerializer.serializeContact(contact) };
     } catch (err) {
         if (err instanceof ContactNotFoundError) {

@@ -6,14 +6,15 @@ import { SFContact } from 'services/salesforce.interfaces';
 import { connect } from './salesforce-connection.service';
 
 export default class SalesforceService {
-    static async findContactByEmail(email: string): Promise<SFContact> {
+    static async findContactByEmailOrLastName(search: string): Promise<SFContact> {
         const connection: Connection = await connect();
         const results = await connection.sobject("Contact").find({
             $or: [
-                { Email: { $like: email } },
-                { Personal_Email__c: { $like: email } },
-                { Work_Email__c: { $like: email } },
-                { Alternate_Email__c: { $like: email } },
+                { LastName: { $like: search } },
+                { Email: { $like: search } },
+                { Personal_Email__c: { $like: search } },
+                { Work_Email__c: { $like: search } },
+                { Alternate_Email__c: { $like: search } },
             ]
         });
 
