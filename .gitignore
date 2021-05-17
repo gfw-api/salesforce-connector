@@ -1,2 +1,12 @@
-node_modules
+node_modules/
+.env
+dev.env
+prod.env
+staging.env
+npm-debug.log
+IMPORTANT.txt
+.vscode
+processes.json
 .nyc_output
+coverage
+dist
