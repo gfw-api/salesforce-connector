@@ -7,7 +7,7 @@ import { SFContact } from 'services/salesforce.interfaces';
 import SalesForceSerializer from 'serializers/salesforce.serializer';
 import ContactNotFoundError from 'errors/contact-not-found.error';
 
-const router: Router = new Router<DefaultState, Context>({ prefix: '/salesforce' });
+const router: Router = new Router<DefaultState, Context>({ prefix: '/v1/salesforce' });
 
 router.get('/contact/:search', async (ctx: Context): Promise<void> => {
     logger.info('[SalesforceConnector] - Find SF contact by email or last name: ', ctx.params.search);
