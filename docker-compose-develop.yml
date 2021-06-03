@@ -3,7 +3,7 @@ services:
   develop:
     build: .
     ports:
-      - "9000:9000"
+      - "9500:9500"
     container_name: salesforce-connector
     env_file:
       - dev.env

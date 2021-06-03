@@ -3,18 +3,18 @@ services:
   test:
     build: .
     ports:
-      - "9000:9000"
+      - "9500:9500"
     container_name: salesforce-connector-test
     environment:
       NODE_ENV: test
       SESSION_KEY: test
-      PORT: 9000
+      PORT: 9500
       NODE_PATH: app/src
-      PUBLIC_URL: http://127.0.0.1:9000
+      PUBLIC_URL: http://127.0.0.1:9500
       CT_URL: http://mymachine:8000
       CT_TOKEN: cttoken
       CT_REGISTER_MODE: autoa
-      LOCAL_URL: http://127.0.0.1:9000
+      LOCAL_URL: http://127.0.0.1:9500
       HOST_IP: 127.0.0.1
       FASTLY_ENABLED: "false"
       SALESFORCE_URL: "fakeUrl"

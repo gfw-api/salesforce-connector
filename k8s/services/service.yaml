@@ -7,6 +7,6 @@ metadata:
   name: salesforce-connector
 spec:
   ports:
-    - port: 9000
+    - port: 9500
   selector:
     name: salesforce-connector
