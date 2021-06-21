@@ -10,9 +10,8 @@ services:
       SESSION_KEY: test
       PORT: 9500
       NODE_PATH: app/src
-      PUBLIC_URL: http://127.0.0.1:9500
-      CT_URL: http://mymachine:8000
-      CT_TOKEN: cttoken
+      GATEWAY_URL: http://mymachine:8000
+      MICROSERVICE_TOKEN: cttoken
       CT_REGISTER_MODE: autoa
       LOCAL_URL: http://127.0.0.1:9500
       HOST_IP: 127.0.0.1

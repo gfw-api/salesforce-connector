@@ -21,7 +21,7 @@ export const getTestAgent: (forceNew?: boolean) => Promise<ChaiHttp.Agent> = asy
     }
 
     if (process.env.CT_REGISTER_MODE === 'auto') {
-        nock(process.env.CT_URL)
+        nock(process.env.GATEWAY_URL)
             .post(`/api/v1/microservice`)
             .reply(200);
     }
