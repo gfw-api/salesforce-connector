@@ -32,7 +32,7 @@ describe('Find Salesforce contacts by last name', () => {
         requester = await getTestAgent(true);
 
         const lastName: string = 'test';
-        const response: request.Response = await requester.get(`/v1/salesforce/contact/${lastName}`);
+        const response: request.Response = await requester.get(`/api/v1/salesforce/contact/${lastName}`);
         response.status.should.equal(404);
         response.body.should.be.an('object').and.have.property('errors');
         response.body.errors.should.be.an('array').and.have.length(1);
@@ -59,7 +59,7 @@ describe('Find Salesforce contacts by last name', () => {
         requester = await getTestAgent(true);
 
         const lastName: string = 'test2@email.com';
-        const response: request.Response = await requester.get(`/v1/salesforce/contact/${lastName}`);
+        const response: request.Response = await requester.get(`/api/v1/salesforce/contact/${lastName}`);
         response.status.should.equal(200);
         response.body.should.be.an('object').and.have.property('data');
         response.body.data.should.have.property('Id', sfContact.Id);
