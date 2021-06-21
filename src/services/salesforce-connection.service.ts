@@ -1,5 +1,5 @@
 import config from 'config';
-import jsforce, {Connection} from 'jsforce';
+import jsforce, { Connection } from 'jsforce';
 import logger from 'logger';
 
 let currentConnection: Connection;
@@ -21,7 +21,7 @@ async function createConnection(): Promise<void> {
 }
 
 export async function connect(): Promise<Connection> {
-    if(!currentConnection) {
+    if (!currentConnection) {
         await createConnection();
     }
 

@@ -1,13 +1,13 @@
 {
-  "name": "#(service.name)",
+  "name": "salesforce-connector",
   "tags": ["salesforce"],
   "endpoints": [
     {
-      "path": "/salesforce/contact/:email",
+      "path": "/v1/salesforce/contact/:email",
       "method": "GET",
       "redirect": {
         "method": "GET",
-        "path": "/salesforce/contact/:email"
+        "path": "/v1/salesforce/contact/:email"
       }
     }
   ]

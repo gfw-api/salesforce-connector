@@ -8,12 +8,12 @@ env:
   global:
     - CC_TEST_REPORTER_ID=52240914712761cfe13f0768eb38929340c08771e2933384222c0193d1db55bb
     - NODE_ENV=test
-    - PORT=9000
+    - PORT=9500
     - LOGGER_TYPE=console
     - LOGGER_LEVEL=warn
     - HOST_IP=127.0.0.1
     - NODE_PATH=app/src
-    - PUBLIC_URL=http://localhost:9000
+    - PUBLIC_URL=http://localhost:9500
     - API_VERSION=v1
     - ALLOW_CONFIG_MUTATIONS=true
     - REDIS_URL=localhost

@@ -1,7 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     name: salesforce-connector
   name: salesforce-connector
@@ -20,7 +19,6 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      creationTimestamp: null
       labels:
         name: salesforce-connector
     spec:
@@ -38,7 +36,7 @@ spec:
             - start
           env:
             - name: PORT
-              value: "9000"
+              value: "9500"
             - name: LOGGER_TYPE
               value: console
             - name: LOGGER_LEVEL
@@ -60,7 +58,7 @@ spec:
                   key: CT_TOKEN
                   name: mssecrets
             - name: LOCAL_URL
-              value: 'http://salesforce-connector.gfw.svc.cluster.local:9000'
+              value: 'http://salesforce-connector.gfw.svc.cluster.local:9500'
             - name: CT_URL
               valueFrom:
                 secretKeyRef:
@@ -104,7 +102,7 @@ spec:
             failureThreshold: 3
             httpGet:
               path: /healthcheck
-              port: 9000
+              port: 9500
               scheme: HTTP
             initialDelaySeconds: 30
             periodSeconds: 15
@@ -112,13 +110,13 @@ spec:
             timeoutSeconds: 5
           name: salesforce-connector
           ports:
-            - containerPort: 9000
+            - containerPort: 9500
               protocol: TCP
           readinessProbe:
             failureThreshold: 3
             httpGet:
               path: /healthcheck
-              port: 9000
+              port: 9500
               scheme: HTTP
             initialDelaySeconds: 30
             periodSeconds: 15
@@ -140,4 +138,3 @@ spec:
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
-status: {}
