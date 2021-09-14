@@ -28,7 +28,6 @@ export interface SFDataImportRecord {
     Collab_Summary__c?: string;
     Community_Member_Type__c?: string;
     Country_of_Interest__c?: string;
-    Email?: string;
     Department__c?: string;
     First_Name__c?: string;
     Geographic_Region__c?: string;

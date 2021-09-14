@@ -51,7 +51,7 @@ describe('Log Salesforce contact actions', () => {
         const response: request.Response = await requester
             .post(`/api/v1/salesforce/contact/log-action`)
             .send({
-                email: 'userEmail'
+                email: 'test@donotsavethis.com'
             });
 
         response.status.should.equal(400);
@@ -74,7 +74,7 @@ describe('Log Salesforce contact actions', () => {
         const response: request.Response = await requester
             .post(`/api/v1/salesforce/contact/log-action`)
             .send({
-                email: 'userEmail',
+                email: 'test@donotsavethis.com',
                 department: 'abcd'
             });
 
@@ -83,15 +83,21 @@ describe('Log Salesforce contact actions', () => {
         sandbox.assert.calledOnce(methodStubs.find);
         sandbox.assert.calledWith(methodStubs.find, {
             '$or': [
-                { 'Email': { '$like': 'userEmail' } },
-                { 'Personal_Email__c': { '$like': 'userEmail' } },
-                { 'Work_Email__c': { '$like': 'userEmail' } },
-                { 'Alternate_Email__c': { '$like': 'userEmail' } }
+                { 'Email': { '$like': 'test@donotsavethis.com' } },
+                { 'Personal_Email__c': { '$like': 'test@donotsavethis.com' } },
+                { 'Work_Email__c': { '$like': 'test@donotsavethis.com' } },
+                { 'Alternate_Email__c': { '$like': 'test@donotsavethis.com' } }
             ]
         });
 
         sandbox.assert.calledOnce(methodStubs.create);
-        sandbox.assert.calledWith(methodStubs.create, [{ Department__c: 'abcd', Email: 'userEmail' }]);
+        sandbox.assert.calledWith(methodStubs.create, [{
+            Department__c: 'abcd',
+            Preferred_Email__c: 'test@donotsavethis.com',
+            Personal_Email__c: 'test@donotsavethis.com',
+            Work_Email__c: 'test@donotsavethis.com',
+            Alternate_Email__c: 'test@donotsavethis.com'
+        }]);
     });
 
     it('Logging a SF contact action for a contact that exists creates a new record without Email and with Individual ID', async () => {
@@ -99,7 +105,7 @@ describe('Log Salesforce contact actions', () => {
 
         // Ensure stub is called before starting the test server
         const { methodStubs } = stubJSForce(sandbox, {
-            find:[sfContact],
+            find: [sfContact],
             create:
                 [{
                     'success': true
@@ -111,7 +117,7 @@ describe('Log Salesforce contact actions', () => {
         const response: request.Response = await requester
             .post(`/api/v1/salesforce/contact/log-action`)
             .send({
-                email: 'userEmail',
+                email: 'test@donotsavethis.com',
                 department: 'abcd'
             });
 
@@ -120,10 +126,10 @@ describe('Log Salesforce contact actions', () => {
         sandbox.assert.calledOnce(methodStubs.find);
         sandbox.assert.calledWith(methodStubs.find, {
             '$or': [
-                { 'Email': { '$like': 'userEmail' } },
-                { 'Personal_Email__c': { '$like': 'userEmail' } },
-                { 'Work_Email__c': { '$like': 'userEmail' } },
-                { 'Alternate_Email__c': { '$like': 'userEmail' } }
+                { 'Email': { '$like': 'test@donotsavethis.com' } },
+                { 'Personal_Email__c': { '$like': 'test@donotsavethis.com' } },
+                { 'Work_Email__c': { '$like': 'test@donotsavethis.com' } },
+                { 'Alternate_Email__c': { '$like': 'test@donotsavethis.com' } }
             ]
         });
 

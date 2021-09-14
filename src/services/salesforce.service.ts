@@ -80,7 +80,10 @@ export default class SalesforceService {
             if (!(error instanceof ContactNotFoundError)) {
                 throw error;
             }
-            newDataImportRecord.Email = body.email;
+            newDataImportRecord.Preferred_Email__c = body.email;
+            newDataImportRecord.Personal_Email__c = body.email;
+            newDataImportRecord.Work_Email__c = body.email;
+            newDataImportRecord.Alternate_Email__c = body.email;
         }
 
         let insertResult: any;
