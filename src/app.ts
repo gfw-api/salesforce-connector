@@ -55,7 +55,7 @@ const init: () => Promise<IInit> = async (): Promise<IInit> => {
 
         app.use(koaLogger());
 
-        app.use(SalesforceRouter.routes());
+        app.use(SalesforceRouter.middleware());
 
         const port: string = process.env.PORT || '9500';
 
