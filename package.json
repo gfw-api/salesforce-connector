@@ -40,12 +40,12 @@
   "dependencies": {
     "bunyan": "^1.8.15",
     "config": "^3.3.6",
-    "jsforce": "^2.0.0-beta.3",
+    "jsforce": "^2.0.0-beta.8",
     "koa": "^2.13.1",
+    "koa-joi-router": "^8.0.0",
     "koa-logger": "^3.2.1",
-    "koa-router": "^10.0.0",
     "koa-simple-healthcheck": "^0.0.1",
-    "rw-api-microservice-node": "^4.0.0"
+    "rw-api-microservice-node": "^4.0.2"
   },
   "devDependencies": {
     "@types/bunyan": "^1.8.6",
@@ -53,6 +53,7 @@
     "@types/chai-http": "^4.2.0",
     "@types/config": "^0.0.38",
     "@types/koa": "^2.13.1",
+    "@types/koa-joi-router": "^8.0.1",
     "@types/koa-logger": "^3.1.1",
     "@types/koa-router": "^7.4.2",
     "@types/mocha": "^8.2.2",

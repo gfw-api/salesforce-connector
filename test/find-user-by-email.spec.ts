@@ -27,25 +27,24 @@ describe('Find Salesforce contacts by email', () => {
 
     it('Finding a SF contact by email for a contact that does not exist returns 404 Not Found', async () => {
         // Ensure stub is called before starting the test server
-        const { findStub } = stubJSForce(sandbox);
+        const { methodStubs } = stubJSForce(sandbox, { find: []});
 
         requester = await getTestAgent(true);
 
-        const email: string = 'test@email.com';
-        const response: request.Response = await requester.get(`/api/v1/salesforce/contact/${email}`);
+        const searchCriteria: string = 'test@email.com';
+        const response: request.Response = await requester.get(`/api/v1/salesforce/contact/search/${searchCriteria}`);
         response.status.should.equal(404);
         response.body.should.be.an('object').and.have.property('errors');
         response.body.errors.should.be.an('array').and.have.length(1);
         response.body.errors[0].should.have.property('detail', 'Contact not found');
 
-        sandbox.assert.calledOnce(findStub);
-        sandbox.assert.calledWith(findStub, {
+        sandbox.assert.calledOnce(methodStubs.find);
+        sandbox.assert.calledWith(methodStubs.find, {
             '$or': [
-                { 'LastName': { '$like': email } },
-                { 'Email': { '$like': email } },
-                { 'Personal_Email__c': { '$like': email } },
-                { 'Work_Email__c': { '$like': email } },
-                { 'Alternate_Email__c': { '$like': email } }
+                { 'Email': { '$like': searchCriteria } },
+                { 'Personal_Email__c': { '$like': searchCriteria } },
+                { 'Work_Email__c': { '$like': searchCriteria } },
+                { 'Alternate_Email__c': { '$like': searchCriteria } }
             ]
         });
     });
@@ -54,12 +53,12 @@ describe('Find Salesforce contacts by email', () => {
         const sfContact: SFContact = SFContactFactory.get({ Email: 'test2@email.com' });
 
         // Ensure stub is called before starting the test server
-        const { findStub } = stubJSForce(sandbox, [sfContact]);
+        const { methodStubs } = stubJSForce(sandbox, { find: [sfContact]});
 
         requester = await getTestAgent(true);
 
-        const email: string = 'test2@email.com';
-        const response: request.Response = await requester.get(`/api/v1/salesforce/contact/${email}`);
+        const searchCriteria: string = 'henrique.pacheco@vizzuality.com';
+        const response: request.Response = await requester.get(`/api/v1/salesforce/contact/search/${searchCriteria}`);
         response.status.should.equal(200);
         response.body.should.be.an('object').and.have.property('data');
         response.body.data.should.have.property('Id', sfContact.Id);
@@ -70,14 +69,13 @@ describe('Find Salesforce contacts by email', () => {
         response.body.data.should.have.property('Work_Email__c', sfContact.Work_Email__c);
         response.body.data.should.have.property('Alternate_Email__c', sfContact.Alternate_Email__c);
 
-        sandbox.assert.calledOnce(findStub);
-        sandbox.assert.calledWith(findStub, {
+        sandbox.assert.calledOnce(methodStubs.find);
+        sandbox.assert.calledWith(methodStubs.find, {
             '$or': [
-                { 'LastName': { '$like': email } },
-                { 'Email': { '$like': email } },
-                { 'Personal_Email__c': { '$like': email } },
-                { 'Work_Email__c': { '$like': email } },
-                { 'Alternate_Email__c': { '$like': email } }
+                { 'Email': { '$like': searchCriteria } },
+                { 'Personal_Email__c': { '$like': searchCriteria } },
+                { 'Work_Email__c': { '$like': searchCriteria } },
+                { 'Alternate_Email__c': { '$like': searchCriteria } }
             ]
         });
     });

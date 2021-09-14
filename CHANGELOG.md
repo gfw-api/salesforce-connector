@@ -1,3 +1,7 @@
+## 21/09/2021
+
+- Add endpoint to log user data update. 
+
 ## 21/06/2021
 
 - Update `rw-api-microservice-node` to remove CT support.
