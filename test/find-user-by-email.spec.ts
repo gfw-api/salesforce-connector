@@ -83,13 +83,14 @@ describe('Find Salesforce contacts by email', () => {
 
         response.status.should.equal(200);
         response.body.should.be.an('object').and.have.property('data');
-        response.body.data.should.have.property('Id', sfContact.Id);
-        response.body.data.should.have.property('FirstName', sfContact.FirstName);
-        response.body.data.should.have.property('LastName', sfContact.LastName);
-        response.body.data.should.have.property('Email', sfContact.Email);
-        response.body.data.should.have.property('Personal_Email__c', sfContact.Personal_Email__c);
-        response.body.data.should.have.property('Work_Email__c', sfContact.Work_Email__c);
-        response.body.data.should.have.property('Alternate_Email__c', sfContact.Alternate_Email__c);
+        response.body.data.should.be.an('array').and.have.length(1);
+        response.body.data[0].should.have.property('Id', sfContact.Id);
+        response.body.data[0].should.have.property('FirstName', sfContact.FirstName);
+        response.body.data[0].should.have.property('LastName', sfContact.LastName);
+        response.body.data[0].should.have.property('Email', sfContact.Email);
+        response.body.data[0].should.have.property('Personal_Email__c', sfContact.Personal_Email__c);
+        response.body.data[0].should.have.property('Work_Email__c', sfContact.Work_Email__c);
+        response.body.data[0].should.have.property('Alternate_Email__c', sfContact.Alternate_Email__c);
 
         sandbox.assert.calledOnce(methodStubs.find);
         sandbox.assert.calledWith(methodStubs.find, {

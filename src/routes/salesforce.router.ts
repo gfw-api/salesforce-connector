@@ -68,7 +68,7 @@ const searchContact: (ctx: Context) => Promise<void> = async (ctx: Context): Pro
 
     try {
         const contact: SFContact = await SalesforceService.findContactByEmail(ctx.query.email as string);
-        ctx.body = SalesForceSerializer.serialize(contact);
+        ctx.body = SalesForceSerializer.serialize([contact]);
     } catch (err) {
         if (err instanceof ContactNotFoundError) {
             return ctx.throw(404, 'Contact not found');
