@@ -37,29 +37,6 @@ describe('Log Salesforce contact actions', () => {
         response.body.errors[0].should.have.property('detail', '"email" is required');
     });
 
-    it('Logging a SF contact action without actual data returns a 400', async () => {
-        const { methodStubs } = stubJSForce(sandbox, {
-            find: [],
-            create:
-                [{
-                    'success': true
-                }]
-        });
-
-        requester = await getTestAgent(true);
-
-        const response: request.Response = await requester
-            .post(`/api/v1/salesforce/contact/log-action`)
-            .send({
-                email: 'test@donotsavethis.com'
-            });
-
-        response.status.should.equal(400);
-        response.body.should.be.an('object').and.have.property('errors');
-        response.body.errors.should.be.an('array').and.have.length(1);
-        response.body.errors[0].should.have.property('detail', 'No properties to update');
-    });
-
     it('Logging a SF contact action for a contact that does not exist creates a new record with Email and without Individual ID', async () => {
         const { methodStubs } = stubJSForce(sandbox, {
             find: [],
@@ -75,7 +52,7 @@ describe('Log Salesforce contact actions', () => {
             .post(`/api/v1/salesforce/contact/log-action`)
             .send({
                 email: 'test@donotsavethis.com',
-                department: 'abcd'
+                primaryRole: 'abcd'
             });
 
         response.status.should.equal(201);
@@ -92,11 +69,8 @@ describe('Log Salesforce contact actions', () => {
 
         sandbox.assert.calledOnce(methodStubs.create);
         sandbox.assert.calledWith(methodStubs.create, [{
-            Department__c: 'abcd',
-            Preferred_Email__c: 'test@donotsavethis.com',
-            Personal_Email__c: 'test@donotsavethis.com',
-            Work_Email__c: 'test@donotsavethis.com',
-            Alternate_Email__c: 'test@donotsavethis.com'
+            Primary_Role__c: 'abcd',
+            Email__c: 'test@donotsavethis.com'
         }]);
     });
 
@@ -118,7 +92,7 @@ describe('Log Salesforce contact actions', () => {
             .post(`/api/v1/salesforce/contact/log-action`)
             .send({
                 email: 'test@donotsavethis.com',
-                department: 'abcd'
+                primaryRole: 'abcd'
             });
 
         response.status.should.equal(201);
@@ -135,7 +109,8 @@ describe('Log Salesforce contact actions', () => {
 
         sandbox.assert.calledOnce(methodStubs.create);
         sandbox.assert.calledWith(methodStubs.create, [{
-            Department__c: 'abcd',
+            Primary_Role__c: 'abcd',
+            Email__c: 'test@donotsavethis.com',
             Potential_Individual_ID__c: sfContact.External_Id__c
         }]);
     });

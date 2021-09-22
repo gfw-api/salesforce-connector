@@ -7,41 +7,25 @@ import { SFContact, SFDataImportRecord } from 'services/salesforce.interfaces';
 import { connect } from './salesforce-connection.service';
 import InsertFailedError from '../errors/insert-failed.error';
 import InvalidPropertyError from '../errors/invalid-property.error';
-import NoPropertiesError from '../errors/no-properties.error';
 
 const SF_DATA_IMPORT_RECORD_FIELD_MAP: Record<string, any> = {
     accountName: 'Account_Name__c',
-    alternateEmail: 'Alternate_Email__c',
-    assistant: 'Assistant__c',
-    assistantEmailAddress: 'Assistant_Email_Address__c',
-    asstPhone: 'Asst_Phone__c',
     cityOfInterest: 'City_of_Interest__c',
     collabSummary: 'Collab_Summary__c',
     communityMemberType: 'Community_Member_Type__c',
     countryOfInterest: 'Country_of_Interest__c',
-    department: 'Department__c',
+    email: 'Email__c',
     firstName: 'First_Name__c',
-    geographicRegion: 'Geographic_Region__c',
     gfwContactType: 'GFW_Contact_Type__c',
-    gradeLevel: 'Grade_Level__c',
-    importedAccount: 'Imported_Account__c',
-    importedContact: 'Imported_Contact__c',
-    invalidEmailAddress: 'Invalid_Email_Address__c',
     lastName: 'Last_Name__c',
-    nickname: 'Nickname__c',
     partnerType: 'Partner_Type__c',
-    personalEmail: 'Personal_Email__c',
-    preferredEmail: 'Preferred_Email__c',
     preferredLanguage: 'Preferred_Language__c',
     primaryRole: 'Primary_Role__c',
-    risksOrSensitivities: 'Risks_or_Sensitivities__c',
     sector: 'Sector__c',
     sourceOfContactCreation: 'Source_of_Contact_Creation__c',
     stateDepartmentProvinceOfInterest: 'State_Department_Province_of_Interest__c',
-    suffix: 'Suffix__c',
     title: 'Title__c',
     topicsOfInterest: 'Topics_of_Interest__c',
-    workEmail: 'Work_Email__c',
 };
 
 
@@ -80,10 +64,7 @@ export default class SalesforceService {
             if (!(error instanceof ContactNotFoundError)) {
                 throw error;
             }
-            newDataImportRecord.Preferred_Email__c = body.email;
-            newDataImportRecord.Personal_Email__c = body.email;
-            newDataImportRecord.Work_Email__c = body.email;
-            newDataImportRecord.Alternate_Email__c = body.email;
+            newDataImportRecord.Email__c = body.email;
         }
 
         let insertResult: any;
@@ -116,10 +97,6 @@ export default class SalesforceService {
             } else {
                 throw new InvalidPropertyError(`Property ${key} could not be mapped to a valid field.`);
             }
-        }
-
-        if (Object.keys(dataImportRecord).length === 0) {
-            throw new NoPropertiesError();
         }
 
         return dataImportRecord;
