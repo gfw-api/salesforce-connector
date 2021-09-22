@@ -37,6 +37,22 @@ describe('Log Salesforce contact actions', () => {
         response.body.errors[0].should.have.property('detail', '"email" is required');
     });
 
+    it('Logging a SF contact action with an invalid field returns a 400 error message', async () => {
+        requester = await getTestAgent(true);
+
+        const response: request.Response = await requester
+            .post(`/api/v1/salesforce/contact/log-action`)
+            .send({
+                email: 'user@email.com',
+                potato: 'user@email.com'
+            });
+
+        response.status.should.equal(400);
+        response.body.should.be.an('object').and.have.property('errors');
+        response.body.errors.should.be.an('array').and.have.length(1);
+        response.body.errors[0].should.have.property('detail', '"potato" is not allowed');
+    });
+
     it('Logging a SF contact action for a contact that does not exist creates a new record with Email and without Individual ID', async () => {
         const { methodStubs } = stubJSForce(sandbox, {
             find: [],
