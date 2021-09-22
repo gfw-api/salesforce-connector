@@ -8,6 +8,7 @@ import koaSimpleHealthCheck from 'koa-simple-healthcheck';
 import logger from 'logger';
 import SalesforceRouter from 'routes/salesforce.router';
 import ErrorSerializer from 'serializers/error.serializer';
+import koaBody from 'koa-body';
 
 interface IInit {
     server: Server;
@@ -17,6 +18,8 @@ interface IInit {
 const init: () => Promise<IInit> = async (): Promise<IInit> => {
     return new Promise((resolve) => {
         const app: Koa = new Koa();
+
+        app.use(koaBody());
 
         app.use(koaSimpleHealthCheck());
 

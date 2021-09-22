@@ -6,6 +6,9 @@ import { closeTestAgent, getTestAgent } from './utils/test.server';
 import { stubJSForce } from './utils/jsforce.stub';
 import { SFContact } from '../src/services/salesforce.interfaces';
 import SFContactFactory from './utils/sfcontact.factory';
+import { mockGetUserFromToken } from './utils/helpers';
+import { USERS } from './utils/test.constants';
+
 
 let requester: ChaiHttp.Agent;
 let sandbox: SinonSandbox;
@@ -106,6 +109,49 @@ describe('Log Salesforce contact actions', () => {
 
         const response: request.Response = await requester
             .post(`/api/v1/salesforce/contact/log-action`)
+            .send({
+                email: 'test@donotsavethis.com',
+                primaryRole: 'abcd'
+            });
+
+        response.status.should.equal(201);
+
+        sandbox.assert.calledOnce(methodStubs.find);
+        sandbox.assert.calledWith(methodStubs.find, {
+            '$or': [
+                { 'Email': { '$like': 'test@donotsavethis.com' } },
+                { 'Personal_Email__c': { '$like': 'test@donotsavethis.com' } },
+                { 'Work_Email__c': { '$like': 'test@donotsavethis.com' } },
+                { 'Alternate_Email__c': { '$like': 'test@donotsavethis.com' } }
+            ]
+        });
+
+        sandbox.assert.calledOnce(methodStubs.create);
+        sandbox.assert.calledWith(methodStubs.create, [{
+            Primary_Role__c: 'abcd',
+            Email__c: 'test@donotsavethis.com',
+            Potential_Individual_ID__c: sfContact.External_Id__c
+        }]);
+    });
+
+    it('Logging a SF contact action for a contact that exists creates a new record without Email and with Individual ID - authenticated user', async () => {
+        mockGetUserFromToken(USERS.ADMIN);
+        const sfContact: SFContact = SFContactFactory.get({ Email: 'test2@email.com' });
+
+        // Ensure stub is called before starting the test server
+        const { methodStubs } = stubJSForce(sandbox, {
+            find: [sfContact],
+            create:
+                [{
+                    'success': true
+                }]
+        });
+
+        requester = await getTestAgent(true);
+
+        const response: request.Response = await requester
+            .post(`/api/v1/salesforce/contact/log-action`)
+            .set('Authorization', `Bearer abcd`)
             .send({
                 email: 'test@donotsavethis.com',
                 primaryRole: 'abcd'

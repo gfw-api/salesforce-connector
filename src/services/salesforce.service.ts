@@ -92,8 +92,9 @@ export default class SalesforceService {
         for (const [key, value] of Object.entries(body)) {
             if (key in SF_DATA_IMPORT_RECORD_FIELD_MAP) {
                 dataImportRecord[SF_DATA_IMPORT_RECORD_FIELD_MAP[key] as keyof SFDataImportRecord] = value;
-            } else if (key === 'email') {
+            } else if (key === 'email' || key === 'loggedUser') {
                 // email will be present, and it should be silently dropped.
+                // loggedUser is internal, and should be silently dropped.
             } else {
                 throw new InvalidPropertyError(`Property ${key} could not be mapped to a valid field.`);
             }

@@ -16,6 +16,7 @@ const updateContactConfig: Config = {
     validate: {
         type: 'json',
         body: {
+            loggedUser: Joi.object().optional(),
             accountName: Joi.string().optional().max(80),
             cityOfInterest: Joi.string().optional().max(100),
             collabSummary: Joi.string().optional().max(255),
@@ -40,6 +41,7 @@ const updateContactConfig: Config = {
 const searchContactConfig: Config = {
     validate: {
         query: {
+            loggedUser: Joi.optional(),
             email: Joi.string().required().max(100),
         }
     }
