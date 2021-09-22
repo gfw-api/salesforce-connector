@@ -37,6 +37,14 @@ const updateContactConfig: Config = {
     }
 };
 
+const searchContactConfig: Config = {
+    validate: {
+        query: {
+            email: Joi.string().required().max(100),
+        }
+    }
+};
+
 
 const logAction: (ctx: Context) => Promise<void> = async (ctx: Context): Promise<void> => {
     logger.info('[SalesforceConnector] - Log SF contact action');
@@ -59,7 +67,7 @@ const searchContact: (ctx: Context) => Promise<void> = async (ctx: Context): Pro
     logger.info('[SalesforceConnector] - Find SF contact by email: ', ctx.params.search);
 
     try {
-        const contact: SFContact = await SalesforceService.findContactByEmail(ctx.params.search);
+        const contact: SFContact = await SalesforceService.findContactByEmail(ctx.query.email as string);
         ctx.body = SalesForceSerializer.serialize(contact);
     } catch (err) {
         if (err instanceof ContactNotFoundError) {
@@ -72,6 +80,6 @@ const searchContact: (ctx: Context) => Promise<void> = async (ctx: Context): Pro
 };
 
 sfRouter.post('/contact/log-action', updateContactConfig, logAction);
-sfRouter.get('/contact/search/:search', searchContact);
+sfRouter.get('/contact/search', searchContactConfig, searchContact);
 
 export default sfRouter;

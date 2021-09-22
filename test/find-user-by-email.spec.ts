@@ -25,6 +25,18 @@ describe('Find Salesforce contacts by email', () => {
         sandbox = sinon.createSandbox();
     });
 
+    it('Finding a SF contact without providing the email query param returns 400 Bad Request', async () => {
+        requester = await getTestAgent(true);
+
+        const response: request.Response = await requester
+            .get(`/api/v1/salesforce/contact/search`);
+
+        response.status.should.equal(400);
+        response.body.should.be.an('object').and.have.property('errors');
+        response.body.errors.should.be.an('array').and.have.length(1);
+        response.body.errors[0].should.have.property('detail', '"email" is required');
+    });
+
     it('Finding a SF contact by email for a contact that does not exist returns 404 Not Found', async () => {
         // Ensure stub is called before starting the test server
         const { methodStubs } = stubJSForce(sandbox, { find: []});
@@ -32,7 +44,12 @@ describe('Find Salesforce contacts by email', () => {
         requester = await getTestAgent(true);
 
         const searchCriteria: string = 'test@email.com';
-        const response: request.Response = await requester.get(`/api/v1/salesforce/contact/search/${searchCriteria}`);
+        const response: request.Response = await requester
+            .get(`/api/v1/salesforce/contact/search`)
+            .query({
+                email: searchCriteria
+            });
+
         response.status.should.equal(404);
         response.body.should.be.an('object').and.have.property('errors');
         response.body.errors.should.be.an('array').and.have.length(1);
@@ -58,7 +75,12 @@ describe('Find Salesforce contacts by email', () => {
         requester = await getTestAgent(true);
 
         const searchCriteria: string = 'henrique.pacheco@vizzuality.com';
-        const response: request.Response = await requester.get(`/api/v1/salesforce/contact/search/${searchCriteria}`);
+        const response: request.Response = await requester
+            .get(`/api/v1/salesforce/contact/search`)
+            .query({
+                email: searchCriteria
+            });
+
         response.status.should.equal(200);
         response.body.should.be.an('object').and.have.property('data');
         response.body.data.should.have.property('Id', sfContact.Id);
