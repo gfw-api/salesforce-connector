@@ -9,23 +9,24 @@ import InsertFailedError from '../errors/insert-failed.error';
 import InvalidPropertyError from '../errors/invalid-property.error';
 
 const SF_DATA_IMPORT_RECORD_FIELD_MAP: Record<string, any> = {
-    accountName: 'Account_Name__c',
-    cityOfInterest: 'City_of_Interest__c',
-    collabSummary: 'Collab_Summary__c',
-    communityMemberType: 'Community_Member_Type__c',
     countryOfInterest: 'Country_of_Interest__c',
     email: 'Email__c',
     firstName: 'First_Name__c',
-    gfwContactType: 'GFW_Contact_Type__c',
     lastName: 'Last_Name__c',
-    partnerType: 'Partner_Type__c',
-    preferredLanguage: 'Preferred_Language__c',
     primaryRole: 'Primary_Role__c',
+    primaryRoleOther: 'Primary_Role_Other__c',
     sector: 'Sector__c',
-    sourceOfContactCreation: 'Source_of_Contact_Creation__c',
-    stateDepartmentProvinceOfInterest: 'State_Department_Province_of_Interest__c',
+    areaOrRegionOfInterest: 'Area_or_Region_of_Interest__c',
     title: 'Title__c',
+    organizationName: 'Account_Name__c',
     topicsOfInterest: 'Topics_of_Interest__c',
+    userCity: 'Mailing_City__c',
+    userState: 'Mailing_State_Province__c',
+    userCountry: 'Mailing_Country__c',
+    howDoYouUseGFW: 'How_do_you_use_GFW__c',
+    howDoYouUseGFWOther: 'How_do_you_use_GFW_Other__c',
+    signUpForTesting: 'GFW_New_Feature_Opt_In__c',
+    sourceOfContactCreation: 'Source_of_Contact_Creation__c',
 };
 
 

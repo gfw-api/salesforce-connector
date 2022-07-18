@@ -1,3 +1,7 @@
+## 18/07/2022
+
+- Update SF field mappings.
+
 ## 21/09/2021
 
 - Add endpoint to log user data update. 
