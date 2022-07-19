@@ -1,4 +1,4 @@
-FROM node:12-alpine
+FROM node:16.16-alpine3.15
 MAINTAINER info@vizzuality.com
 
 ENV NAME salesforce-connector
