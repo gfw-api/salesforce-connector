@@ -1,9 +1,7 @@
 import { Connection } from 'jsforce';
 import logger from 'logger';
-
 import ContactNotFoundError from 'errors/contact-not-found.error';
 import { SFContact, SFDataImportRecord } from 'services/salesforce.interfaces';
-
 import { connect } from './salesforce-connection.service';
 import InsertFailedError from '../errors/insert-failed.error';
 import InvalidPropertyError from '../errors/invalid-property.error';
@@ -28,7 +26,6 @@ const SF_DATA_IMPORT_RECORD_FIELD_MAP: Record<string, any> = {
     signUpForTesting: 'GFW_New_Feature_Opt_In__c',
     sourceOfContactCreation: 'Source_of_Contact_Creation__c',
 };
-
 
 export default class SalesforceService {
     static async findContactByEmail(search: string): Promise<SFContact> {
