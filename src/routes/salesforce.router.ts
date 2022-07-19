@@ -17,23 +17,23 @@ const updateContactConfig: Config = {
         type: 'json',
         body: {
             loggedUser: Joi.object().optional(),
-            accountName: Joi.string().optional().max(80),
-            cityOfInterest: Joi.string().optional().max(100),
-            collabSummary: Joi.string().optional().max(255),
-            communityMemberType: Joi.string().optional().max(100),
             countryOfInterest: Joi.string().optional().max(100),
             email: Joi.string().required().max(100),
-            gfwContactType: Joi.string().optional().max(50),
             firstName: Joi.string().optional().max(50),
             lastName: Joi.string().optional().max(80),
-            partnerType: Joi.string().optional().max(100),
-            preferredLanguage: Joi.string().optional().max(100),
             primaryRole: Joi.string().optional().max(100),
+            primaryRoleOther: Joi.string().optional().max(50),
             sector: Joi.string().optional().max(100),
-            sourceOfContactCreation: Joi.string().optional().max(100),
-            stateDepartmentProvinceOfInterest: Joi.string().optional().max(100),
+            areaOrRegionOfInterest: Joi.string().optional().max(100),
             title: Joi.string().optional().max(80),
+            organizationName: Joi.string().optional().max(100),
             topicsOfInterest: Joi.string().optional().max(100),
+            userCity: Joi.string().optional().max(100),
+            userState: Joi.string().optional().max(100),
+            userCountry: Joi.string().optional().max(100),
+            howDoYouUseGFW: Joi.string().optional().max(50),
+            signUpForTesting: Joi.string().optional().max(50),
+            sourceOfContactCreation: Joi.string().optional().max(100)
         }
     }
 };
