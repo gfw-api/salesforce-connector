@@ -5,7 +5,7 @@ ENV NAME salesforce-connector
 ENV USER salesforce-connector
 
 RUN apk update && apk upgrade && \
-    apk add --no-cache --update bash git openssh python alpine-sdk
+    apk add --no-cache --update bash git openssh python3 alpine-sdk
 
 RUN addgroup $USER && adduser -s /bin/bash -D -G $USER $USER
 
