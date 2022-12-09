@@ -18,7 +18,6 @@ describe('GET healthcheck', () => {
     });
 
     it('Checking the application\'s health should return a 200', async () => {
-        // @ts-ignore
         const response: request.Response = await requester.get('/healthcheck');
         response.status.should.equal(200);
         response.body.should.be.an('object').and.have.property('uptime');

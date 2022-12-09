@@ -2,6 +2,7 @@ import { Server } from 'http';
 import Koa from 'koa';
 import koaLogger from 'koa-logger';
 import { RWAPIMicroservice } from 'rw-api-microservice-node';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import koaSimpleHealthCheck from 'koa-simple-healthcheck';
 
@@ -16,7 +17,8 @@ interface IInit {
 }
 
 const init: () => Promise<IInit> = async (): Promise<IInit> => {
-    return new Promise((resolve) => {
+    return new Promise((resolve: (value: IInit | PromiseLike<IInit>) => void
+    ) => {
         const app: Koa = new Koa();
 
         app.use(koaBody());

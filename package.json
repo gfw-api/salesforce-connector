@@ -18,11 +18,11 @@
     "url": "https://vizzuality.com/"
   },
   "engines": {
-    "node": "~16.16"
+    "node": "~18.12"
   },
   "lint-staged": {
     "*.ts": [
-      "tslint --fix"
+      "eslint --fix"
     ]
   },
   "husky": {
@@ -35,14 +35,16 @@
     "test": "ts-mocha -b --project tsconfig.json -r tsconfig-paths/register --timeout 20000 'test/**/*.ts' --exit",
     "start": "ts-node --files --project tsconfig.json -r tsconfig-paths/register src/index.ts",
     "watch": "ts-node-dev --respawn --transpile-only --files --project tsconfig.json -r tsconfig-paths/register src/index.ts",
-    "lint": "tslint --project tsconfig.json && tsc"
+    "build": "tsc",
+    "lint": "eslint \"{src,test}/**/*.ts\" --fix",
+    "prepare": "husky install"
   },
   "dependencies": {
     "bunyan": "^1.8.15",
-    "config": "^3.3.7",
-    "jsforce": "^2.0.0-beta.15",
-    "koa": "^2.13.4",
-    "koa-body": "^5.0.0",
+    "config": "^3.3.8",
+    "jsforce": "^2.0.0-beta.19",
+    "koa": "^2.14.1",
+    "koa-body": "5.0.0",
     "koa-joi-router": "^8.0.0",
     "koa-logger": "^3.2.1",
     "koa-simple-healthcheck": "^0.0.1",
@@ -50,27 +52,31 @@
   },
   "devDependencies": {
     "@types/bunyan": "^1.8.8",
-    "@types/chai": "^4.3.1",
+    "@types/chai": "^4.3.4",
     "@types/chai-http": "^4.2.0",
-    "@types/config": "^0.0.41",
+    "@types/config": "^3.3.0",
     "@types/koa": "^2.13.5",
     "@types/koa-joi-router": "^8.0.4",
     "@types/koa-logger": "^3.1.2",
     "@types/koa-router": "^7.4.4",
-    "@types/mocha": "^9.1.1",
-    "@types/node": "^18.0.6",
-    "@types/sinon": "^10.0.12",
-    "chai": "^4.3.6",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.11.12",
+    "@types/sinon": "^10.0.13",
+    "@typescript-eslint/eslint-plugin": "^5.46.0",
+    "@typescript-eslint/parser": "^5.46.0",
+    "chai": "^4.3.7",
     "chai-http": "^4.3.0",
-    "mocha": "^10.0.0",
-    "nock": "^13.2.8",
+    "eslint": "^8.28.0",
+    "eslint-plugin-mocha": "^10.1.0",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.1.0",
+    "mocha": "^10.1.0",
+    "nock": "^13.2.9",
     "nyc": "^15.1.0",
-    "sinon": "^14.0.0",
+    "sinon": "^15.0.0",
     "ts-mocha": "^10.0.0",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
-    "tslint": "^6.1.3",
-    "tslint-config-prettier": "^1.18.0",
-    "typescript": "^4.7.4"
+    "typescript": "^4.9.4"
   }
 }

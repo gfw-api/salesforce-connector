@@ -27,7 +27,7 @@ export default class SalesForceSerializer {
         }
         if (data) {
             if (Array.isArray(data)) {
-                result.data = data.map((contact) => SalesForceSerializer.serializeContact(contact));
+                result.data = data.map((contact: SFContact) => SalesForceSerializer.serializeContact(contact));
             } else {
                 result.data = SalesForceSerializer.serializeContact(data);
             }
