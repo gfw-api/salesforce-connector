@@ -30,6 +30,25 @@
       "pre-commit": "lint-staged"
     }
   },
+  "nyc": {
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "exclude": [
+      "**/*.d.ts",
+      "*.test.*"
+    ],
+    "include": [
+      "src/**"
+    ],
+    "reporter": [
+      "text-summary",
+      "lcov"
+    ],
+    "reportDir": "coverage",
+    "all": true
+  },
   "scripts": {
     "coverage": "nyc ts-mocha -b --project tsconfig.json -r tsconfig-paths/register --timeout 20000 'test/**/*.ts' --exit",
     "test": "ts-mocha -b --project tsconfig.json -r tsconfig-paths/register --timeout 20000 'test/**/*.ts' --exit",
