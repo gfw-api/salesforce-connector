@@ -1,7 +1,61 @@
-import nock from 'nock';
+import config from 'config';
+import { ApplicationValidationResponse } from "rw-api-microservice-node/dist/types";
+import { mockCloudWatchLogRequest, mockValidateRequest } from "rw-api-microservice-node/dist/test-mocks";
+import { USERS } from './test.constants';
 
-export const mockGetUserFromToken: (userProfile:Record<string,any>) => void = (userProfile: Record<string, any>) => {
-    nock(process.env.GATEWAY_URL, { reqheaders: { authorization: 'Bearer abcd' } })
-        .get('/auth/user/me')
-        .reply(200, userProfile);
+
+const APPLICATION: ApplicationValidationResponse = {
+    data: {
+        type: "applications",
+        id: "649c4b204967792f3a4e52c9",
+        attributes: {
+            name: "grouchy-armpit",
+            organization: null,
+            user: null,
+            apiKeyValue: "a1a9e4c3-bdff-4b6b-b5ff-7a60a0454e13",
+            createdAt: "2023-06-28T15:00:48.149Z",
+            updatedAt: "2023-06-28T15:00:48.149Z"
+        }
+    }
+};
+
+export const mockValidateRequestWithApiKey = ({
+                                                  apiKey = 'api-key-test',
+                                                  application = APPLICATION
+                                              }) => {
+    mockValidateRequest({
+        gatewayUrl: process.env.GATEWAY_URL,
+        microserviceToken: process.env.MICROSERVICE_TOKEN,
+        application,
+        apiKey
+    });
+    mockCloudWatchLogRequest({
+        application,
+        awsRegion: process.env.AWS_REGION,
+        logGroupName: process.env.CLOUDWATCH_LOG_GROUP_NAME,
+        logStreamName: config.get('service.name')
+    });
+};
+
+export const mockValidateRequestWithApiKeyAndUserToken = ({
+                                                              apiKey = 'api-key-test',
+                                                              token = 'abcd',
+                                                              application = APPLICATION,
+                                                              user = USERS.USER
+                                                          }) => {
+    mockValidateRequest({
+        gatewayUrl: process.env.GATEWAY_URL,
+        microserviceToken: process.env.MICROSERVICE_TOKEN,
+        user,
+        application,
+        token,
+        apiKey
+    });
+    mockCloudWatchLogRequest({
+        user,
+        application,
+        awsRegion: process.env.AWS_REGION,
+        logGroupName: process.env.CLOUDWATCH_LOG_GROUP_NAME,
+        logStreamName: config.get('service.name')
+    });
 };

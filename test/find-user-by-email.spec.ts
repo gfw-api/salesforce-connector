@@ -3,11 +3,14 @@ import nock from 'nock';
 import sinon, { SinonSandbox } from 'sinon';
 import request from 'superagent';
 
-import {SFContact} from 'services/salesforce.interfaces';
-import {closeTestAgent, getTestAgent} from './utils/test.server';
-import {stubJSForce} from './utils/jsforce.stub';
+import { SFContact } from 'services/salesforce.interfaces';
+import { closeTestAgent, getTestAgent } from './utils/test.server';
+import { stubJSForce } from './utils/jsforce.stub';
 import SFContactFactory from './utils/sfcontact.factory';
-import { mockGetUserFromToken } from './utils/helpers';
+import {
+    mockValidateRequestWithApiKey,
+    mockValidateRequestWithApiKeyAndUserToken
+} from './utils/helpers';
 import { USERS } from './utils/test.constants';
 
 let requester: ChaiHttp.Agent;
@@ -28,10 +31,12 @@ describe('Find Salesforce contacts by email', () => {
     });
 
     it('Finding a SF contact without providing the email query param returns 400 Bad Request', async () => {
+        mockValidateRequestWithApiKey({});
         requester = await getTestAgent(true);
 
         const response: request.Response = await requester
-            .get(`/api/v1/salesforce/contact/search`);
+            .get(`/api/v1/salesforce/contact/search`)
+            .set('x-api-key', 'api-key-test');
 
         response.status.should.equal(400);
         response.body.should.be.an('object').and.have.property('errors');
@@ -40,14 +45,16 @@ describe('Find Salesforce contacts by email', () => {
     });
 
     it('Finding a SF contact by email for a contact that does not exist returns 404 Not Found', async () => {
+        mockValidateRequestWithApiKey({});
         // Ensure stub is called before starting the test server
-        const { methodStubs } = stubJSForce(sandbox, { find: []});
+        const { methodStubs } = stubJSForce(sandbox, { find: [] });
 
         requester = await getTestAgent(true);
 
         const searchCriteria: string = 'test@email.com';
         const response: request.Response = await requester
             .get(`/api/v1/salesforce/contact/search`)
+            .set('x-api-key', 'api-key-test')
             .query({
                 email: searchCriteria
             });
@@ -69,16 +76,18 @@ describe('Find Salesforce contacts by email', () => {
     });
 
     it('Finding a SF contact by email for a contact that exists returns 200 OK with the contact information - no auth token', async () => {
+        mockValidateRequestWithApiKey({});
         const sfContact: SFContact = SFContactFactory.get({ Email: 'test2@email.com' });
 
         // Ensure stub is called before starting the test server
-        const { methodStubs } = stubJSForce(sandbox, { find: [sfContact]});
+        const { methodStubs } = stubJSForce(sandbox, { find: [sfContact] });
 
         requester = await getTestAgent(true);
 
         const searchCriteria: string = 'henrique.pacheco@vizzuality.com';
         const response: request.Response = await requester
             .get(`/api/v1/salesforce/contact/search`)
+            .set('x-api-key', 'api-key-test')
             .query({
                 email: searchCriteria
             });
@@ -106,18 +115,19 @@ describe('Find Salesforce contacts by email', () => {
     });
 
     it('Finding a SF contact by email for a contact that exists returns 200 OK with the contact information - authenticated user', async () => {
-        mockGetUserFromToken(USERS.ADMIN);
+        mockValidateRequestWithApiKeyAndUserToken({ user: USERS.ADMIN });
 
         const sfContact: SFContact = SFContactFactory.get({ Email: 'test2@email.com' });
 
         // Ensure stub is called before starting the test server
-        const { methodStubs } = stubJSForce(sandbox, { find: [sfContact]});
+        const { methodStubs } = stubJSForce(sandbox, { find: [sfContact] });
 
         requester = await getTestAgent(true);
 
         const searchCriteria: string = 'henrique.pacheco@vizzuality.com';
         const response: request.Response = await requester
             .get(`/api/v1/salesforce/contact/search`)
+            .set('x-api-key', 'api-key-test')
             .set('Authorization', `Bearer abcd`)
             .query({
                 email: searchCriteria

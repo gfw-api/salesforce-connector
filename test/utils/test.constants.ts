@@ -1,5 +1,7 @@
 /* eslint-disable max-len */
-export const USERS:Record<string, any> = {
+import { LoggedUserValidationResponse } from "rw-api-microservice-node/dist/types";
+
+export const USERS: Record<string, LoggedUserValidationResponse> = {
     USER: {
         id: '1a10d7c6e0a37126611fd7a5',
         name: 'test user',
@@ -97,6 +99,7 @@ export const USERS:Record<string, any> = {
         extraUserData: { apps: ['rw'] }
     },
     MICROSERVICE: {
-        id: 'microservice'
+        id: 'microservice',
+        createdAt: '2018-07-05T13:50:16.000Z',
     }
 };

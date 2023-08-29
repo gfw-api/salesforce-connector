@@ -2,9 +2,9 @@ import { Connection } from 'jsforce';
 import logger from 'logger';
 import ContactNotFoundError from 'errors/contact-not-found.error';
 import { SFContact, SFDataImportRecord } from 'services/salesforce.interfaces';
-import { connect } from './salesforce-connection.service';
-import InsertFailedError from '../errors/insert-failed.error';
-import InvalidPropertyError from '../errors/invalid-property.error';
+import { connect } from 'services/salesforce-connection.service';
+import InsertFailedError from 'errors/insert-failed.error';
+import InvalidPropertyError from 'errors/invalid-property.error';
 
 const SF_DATA_IMPORT_RECORD_FIELD_MAP: Record<string, any> = {
     countryOfInterest: 'Country_of_Interest__c',

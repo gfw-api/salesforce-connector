@@ -6,7 +6,7 @@ import { closeTestAgent, getTestAgent } from './utils/test.server';
 import { stubJSForce } from './utils/jsforce.stub';
 import { SFContact } from '../src/services/salesforce.interfaces';
 import SFContactFactory from './utils/sfcontact.factory';
-import { mockGetUserFromToken } from './utils/helpers';
+import { mockValidateRequestWithApiKey, mockValidateRequestWithApiKeyAndUserToken } from './utils/helpers';
 import { USERS } from './utils/test.constants';
 
 
@@ -28,10 +28,12 @@ describe('Log Salesforce contact actions', () => {
     });
 
     it('Logging a SF contact action for a contact without all the required fields returns a 400 error message', async () => {
+        mockValidateRequestWithApiKey({});
         requester = await getTestAgent(true);
 
         const response: request.Response = await requester
             .post(`/api/v1/salesforce/contact/log-action`)
+            .set('x-api-key', 'api-key-test')
             .send({});
 
         response.status.should.equal(400);
@@ -41,10 +43,12 @@ describe('Log Salesforce contact actions', () => {
     });
 
     it('Logging a SF contact action with an invalid field returns a 400 error message', async () => {
+        mockValidateRequestWithApiKey({});
         requester = await getTestAgent(true);
 
         const response: request.Response = await requester
             .post(`/api/v1/salesforce/contact/log-action`)
+            .set('x-api-key', 'api-key-test')
             .send({
                 email: 'user@email.com',
                 potato: 'user@email.com'
@@ -57,6 +61,7 @@ describe('Log Salesforce contact actions', () => {
     });
 
     it('Logging a SF contact action for a contact that does not exist creates a new record with Email and without Individual ID', async () => {
+        mockValidateRequestWithApiKey({});
         const { methodStubs } = stubJSForce(sandbox, {
             find: [],
             create:
@@ -69,6 +74,7 @@ describe('Log Salesforce contact actions', () => {
 
         const response: request.Response = await requester
             .post(`/api/v1/salesforce/contact/log-action`)
+            .set('x-api-key', 'api-key-test')
             .send({
                 email: 'test@donotsavethis.com',
                 primaryRole: 'abcd'
@@ -94,6 +100,7 @@ describe('Log Salesforce contact actions', () => {
     });
 
     it('Logging a SF contact action for a contact that exists creates a new record without Email and with Individual ID', async () => {
+        mockValidateRequestWithApiKey({});
         const sfContact: SFContact = SFContactFactory.get({ Email: 'test2@email.com' });
 
         // Ensure stub is called before starting the test server
@@ -109,6 +116,7 @@ describe('Log Salesforce contact actions', () => {
 
         const response: request.Response = await requester
             .post(`/api/v1/salesforce/contact/log-action`)
+            .set('x-api-key', 'api-key-test')
             .send({
                 email: 'test@donotsavethis.com',
                 primaryRole: 'abcd'
@@ -135,7 +143,7 @@ describe('Log Salesforce contact actions', () => {
     });
 
     it('Logging a SF contact action for a contact that exists creates a new record without Email and with Individual ID - authenticated user', async () => {
-        mockGetUserFromToken(USERS.ADMIN);
+        mockValidateRequestWithApiKeyAndUserToken({ user: USERS.ADMIN });
         const sfContact: SFContact = SFContactFactory.get({ Email: 'test2@email.com' });
 
         // Ensure stub is called before starting the test server
@@ -152,6 +160,7 @@ describe('Log Salesforce contact actions', () => {
         const response: request.Response = await requester
             .post(`/api/v1/salesforce/contact/log-action`)
             .set('Authorization', `Bearer abcd`)
+            .set('x-api-key', 'api-key-test')
             .send({
                 email: 'test@donotsavethis.com',
                 primaryRole: 'abcd'

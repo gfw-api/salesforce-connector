@@ -12,13 +12,16 @@ services:
       NODE_PATH: app/src
       GATEWAY_URL: http://mymachine:8000
       MICROSERVICE_TOKEN: cttoken
-      CT_REGISTER_MODE: autoa
       LOCAL_URL: http://127.0.0.1:9500
       HOST_IP: 127.0.0.1
       FASTLY_ENABLED: "false"
       SALESFORCE_URL: "fakeUrl"
       SALESFORCE_USERNAME: "fakeUser"
       SALESFORCE_PASSWORD: "fakePass"
+      AWS_REGION: "us-east-1"
+      REQUIRE_API_KEY: true
+      AWS_ACCESS_KEY_ID: "test"
+      AWS_SECRET_ACCESS_KEY: "test"
     command: test
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock

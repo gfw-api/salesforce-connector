@@ -1,4 +1,7 @@
 {
+  "service": {
+    "name": "Salesforce"
+  },
   "logger": {
     "name": "Salesforce",
     "level": "debug",

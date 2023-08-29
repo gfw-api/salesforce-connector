@@ -7,6 +7,11 @@ services:
     container_name: salesforce-connector
     env_file:
       - dev.env
+    environment:
+      AWS_REGION: "us-east-1"
+      REQUIRE_API_KEY: true
+      AWS_ACCESS_KEY_ID: "test"
+      AWS_SECRET_ACCESS_KEY: "test"
     command: develop
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
